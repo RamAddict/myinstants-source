@@ -1,0 +1,43 @@
+{
+  "protocol": 1,
+  "id": "dev.roscord.myinstants",
+  "name": "MyInstants",
+  "version": "1.0.0",
+  "description": "Adds sounds from MyInstants (myinstants.com) to the soundboard.",
+  "hosts": ["myinstants.com"],
+  "hint": "Paste a MyInstants link",
+  "uses": ["soundboard"],
+  "downloads": [
+    {
+      "id": "deno",
+      "name": "Deno",
+      "size": "45 MB",
+      "files": {
+        "windows-x64": {
+          "url": "https://github.com/denoland/deno/releases/latest/download/deno-x86_64-pc-windows-msvc.zip",
+          "unzip": "deno.exe"
+        },
+        "linux-x64": {
+          "url": "https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip",
+          "unzip": "deno"
+        },
+        "linux-arm64": {
+          "url": "https://github.com/denoland/deno/releases/latest/download/deno-aarch64-unknown-linux-gnu.zip",
+          "unzip": "deno"
+        }
+      }
+    }
+  ],
+  "run": {
+    "command": "{dep:deno}",
+    "args": [
+      "run",
+      "--quiet",
+      "--no-prompt",
+      "--no-config",
+      "--allow-net=www.myinstants.com,myinstants.com",
+      "--allow-write",
+      "{dir}/main.ts"
+    ]
+  }
+}
