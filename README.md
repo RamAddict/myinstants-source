@@ -20,14 +20,15 @@ The software comes with no warranty (see [LICENSE](LICENSE)).
 
 Extensions run on desktop Roscord (Linux x64/arm64, Windows x64).
 
-1. Get `myinstants-source-<version>.zip` from this project's releases, or
-   copy the link to it.
+1. Get `myinstants-source.zip` from this project's releases, or copy the
+   link that always points to the newest:
+   `https://github.com/RamAddict/myinstants-source/releases/latest/download/myinstants-source.zip`.
 2. In Roscord, open the soundboard settings, choose to install an extension,
    and pick the file or paste the link.
 3. Roscord shows what the extension will download and asks first: Deno (to
    run the extension, about 45 MB), from its official GitHub releases.
 
-To update, install it again from the same file or link.
+To update, install it again from that link (or from a newer file).
 
 Then paste a MyInstants link where the soundboard adds a sound:
 
@@ -88,7 +89,7 @@ deno task test:network  # the same, plus a real resolve and fetch against MyInst
 deno task check         # type check
 deno lint
 deno fmt --check
-deno task package       # dist/myinstants-source-<version>.zip
+deno task package       # dist/myinstants-source.zip
 ```
 
 With Docker instead of a local Deno:
@@ -109,9 +110,13 @@ deno run --no-prompt --allow-net=www.myinstants.com,myinstants.com \
   '{"protocol": 1, "for": "soundboard", "url": "https://www.myinstants.com/en/instant/vine-boom-sound-70972/"}'
 ```
 
-To release, set `version` in `roscord-extension.json`, commit, and push a
-tag `v<version>`. The workflow in `.github/workflows/release.yml` tests,
-packages and attaches the zip (and its SHA-256) to a GitHub release.
+Every push to `main` releases. `.github/workflows/ci.yml` tests (Linux and
+Windows), packages, and publishes the zip (and its SHA-256) as a GitHub
+release. The version comes from the conventional commits since the last
+`vX.Y.Z` tag (`feat:` minor, `!` or `BREAKING CHANGE:` major, anything else
+patch), or from `version` in `roscord-extension.json` when that is higher.
+The zip's manifest carries the released version. Pull requests run the
+tests and the package without releasing.
 
 ## Layout
 
